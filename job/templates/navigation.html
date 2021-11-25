@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% load static %}
+	<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+	<script src="{% static "font/all.min.js" %}"></script>
+	<title>Job Portal</title>
+	
+	<style>
+		.nav-link{
+			color:#fff !important;
+		}
+		.nav-link:hover{
+			color:yellow !important;
+			background: red;
+			font-weight: bold;
+			border-radius: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<img src="{% static "images/logo.jpg" %}" alt="Logo Image" width="200px" height="125px">
+			</div>
+			<div class="col-sm-6 mt-5 text-center">
+				<span style="font-weight:bold; font-size:30px;">
+					<span style="color:red;">Online Job</span>
+					<span style="color:green;">Portal System</span>
+				</span>
+			</div>
+			<div class="col-sm-3 mt-5" style="padding-left:5%;">
+				<span style="font-weight:bold;font-size:35px;">
+					<a href="http://www.twitter.com/login" target="_blank"><span><i class="fab fa-twitter pl-3 text-info"></i></span></a>
+					<a href="http://www.facebook.com/login" target="_blank"><span><i class="fab fa-facebook-square pl-3 text-primary"></i></span></a>
+					<a href="http://www.instagram.com/login" target="_blank"><span><i class="fab fa-instagram pl-3 text-warning"></i></span></a>
+					<a href="http://www.linkedin.com/login" target="_blank"><span><i class="fab fa-linkedin pl-3 text-info"></i></span></a>
+					<a href="http://www.telegram.com/login" target="_blank"><span><i class="fab fa-telegram pl-3 text-primary"></i></span></a>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!--Navigation Start-->
+	<nav class="navbar navbar-expand-xl navbar-dark" aria-label="Sixth navbar example" style="background:maroon;">
+      <div class="container">
+      <a class="navbar-brand" href="#" style="font-size:25px">Job Portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample06">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item active"style="margin-left:270px;">
+            <a class="nav-link text-white" aria-current="page" href="/"><i class="fas fa-home mx-1" ></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'latest_jobs' %}"><i class="fas fa-arrows-alt mx-1"></i>Latest Jobs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_login' %}"><i class="fas fa-user-plus mx-1"></i>User Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recruiter_login' %}"><i class="fas fa-users mx-1"></i>Recruiter Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin_login' %}"><i class="fas fa-user mx-1"></i>Admin Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact_form' %}"><i class="fas fa-phone-alt mx-1"></i>Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+	<!--Navigation End-->
+
+
+	<script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>

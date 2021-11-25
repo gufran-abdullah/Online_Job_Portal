@@ -1,0 +1,54 @@
+{% load static %}
+{% block body %}
+{% include 'user_navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+</style>
+<marquee direction="right">
+	<h4>Upload Resume</h4>
+</marquee>
+<div class="container">
+			<form action="" method="POST" class="mt-5" enctype="multipart/form-data">
+		    {% csrf_token %}
+				<div class="form-group">
+					<label for="resume"><strong>Upload Resume</strong></label>
+					<input type="file" class="form-control" name="resume" required>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Upload" class="btn btn-dark my-3">
+				</div>
+	        </form>
+</div>
+{% include 'footer.html' %}
+	{% ifequal error "close" %}
+		<script>
+    		alert("Application line has closed now!!!");
+			window.location = ('{% url 'user_joblist' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "notopen" %}
+		<script>
+    		alert("Application line has not started yet!!!");
+			window.location = ('{% url 'user_joblist' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "no" %}
+		<script>
+    		alert("Job Applied Successfully!!!");
+			window.location = ('{% url 'user_joblist' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+  			alert("Something went wrong. Try again!!!");
+		</script>
+	{% endifequal %}
+
+{% endblock %}

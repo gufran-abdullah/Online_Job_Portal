@@ -1,0 +1,107 @@
+{% load static %}
+{% block body %}
+{% include 'navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+</style>
+<marquee direction="right">
+	<h4>Admin Login</h4>
+</marquee>
+<div class="container">
+			<form action="" method="POST" class="mt-5" id="login_form">
+		    {% csrf_token %}
+				<div class="form-group">
+					<label for="username"><strong>Username</strong></label>
+					<input type="text" placeholder="Enter username..." class="form-control" name="username" id="form_uname" required>
+					<span class="error_form" id="uname_error_message"></span>
+				</div>
+				<div class="form-group mt-3">
+					<label for="password"><strong>Password</strong></label>
+					<input type="password" placeholder="Enter password..." class="form-control" name="pwd" id="form_pwd" required>
+					<span class="error_form" id="pwd_error_message"></span>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Login" class="btn btn-dark my-3">
+				</div>
+	        </form>
+</div>
+{% include 'footer.html' %}
+
+	{% ifequal error "no" %}
+		<script>
+    		alert("User LogedIn Successfully!!!");
+			window.location = ('{% url 'admin_home' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+  			alert("Invalid User Credentials. Try again!!!");
+		</script>
+	{% endifequal %}
+
+<script type="text/javascript">
+	$(function(){	
+		$("#pwd_error_message").hide();
+		$("#uname_error_message").hide();
+
+		var error_pwd = false;
+		var error_uname = false;
+
+		$("#form_pwd").focusout(function(){
+			check_pwd();
+		});
+		$("#form_uname").focusout(function(){
+			check_uname();
+		});
+
+		function check_pwd(){
+			var pwd_length = $("#form_pwd").val().length;
+			if(pwd_length < 4){
+				$("#pwd_error_message").html("Atleast 4 characters");
+				$("#pwd_error_message").show();
+				$("#form_pwd").css("border","1px solid red");
+				error_pwd = true;
+			}
+			else{
+				$("#pwd_error_message").hide();
+				$("#form_pwd").css("border","1px solid green");	
+			}
+		}
+
+		function check_uname(){
+			var pattern = /^[a-zA-Z]*$/;
+			var uname = $("#form_uname").val();
+			if(pattern.test(uname) && uname !== ''){
+				$("#uname_error_message").hide();
+				$("#form_uname").css("border","1px solid green");
+			}
+			else{
+				$("#uname_error_message").html("Letters Only");
+				$("#uname_error_message").show();
+				$("#form_uname").css("border","1px solid red");
+				error_fname = true;
+			}
+		}
+
+		$("#login_form").submit(function(){
+			error_pwd = false;
+			error_uname = false;
+
+			check_pwd();
+			check_uname();
+
+			if(error_uname === false && error_pwd === false){
+				return true;
+			}
+			else{
+				return false;
+			}
+		});
+	});	
+</script>
+{% endblock %}

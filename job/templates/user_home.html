@@ -1,0 +1,96 @@
+{% load static %}
+{% block body %}
+{% include 'user_navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.g_border{
+		border:1px solid lightgray;
+		padding: 7px;
+		border-radius: 3px;
+	}
+	.rec_image{
+		width: 300px;
+		height: 300px;
+		border-radius: 5px;
+		position: relative;
+		top: 55px;
+	}
+</style>
+
+<!--===================================Main Body=============================-->
+<marquee direction="right">
+	<h4>User Profile</h4>
+</marquee>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+				<form method="POST" class="mt-5" enctype="multipart/form-data">
+		    {% csrf_token %}
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="fname"><strong>First Name</strong></label>
+						<input type="text" name="fname" value="{{stduser.user.first_name}}" class="form-control">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="lname"><strong>Last Name</strong></label>
+						<input type="text" name="lname" value="{{stduser.user.last_name}}" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12 mt-2">
+						<label for="contact"><strong>Contact #</strong></label>
+						<input type="text" name="contact" value="{{stduser.mobile}}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group mt-2">
+					<label for="email"><strong>Email</strong></label>
+					<input type="email" name="email" value="{{stduser.user.username}}" class="form-control" disabled>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="gender"><strong>Gender</strong></label><br>
+						<div class="g_border">
+							{% if stduser.gender == "male" %}
+							<input type="radio" name="gender" value="male" checked>Male
+							<input type="radio" name="gender" value="female" >Female
+							{% else %}
+							<input type="radio" name="gender" value="male" >Male
+							<input type="radio" name="gender" value="female" checked>Female
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="image"><strong>Image</strong></label>
+						<input type="file" name="image" class="form-control" accept="image/*">
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Update" class="btn btn-dark my-3">
+				</div>
+	        </form>        
+			</div>
+			<div class="col-sm-4 text-center">
+				<img src="{{stduser.image.url}}" alt="Recruiter Image" class="rec_image"> 
+			</div>
+		</div>
+	</div>
+{% include 'footer.html' %}
+	
+	{% ifequal error "no" %}
+		<script>
+    		alert("User Profile Updated Successfully!!!");
+			window.location = ('{% url 'user_home' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+  			alert("Something went wrong. Try again!!!");
+		</script>
+	{% endifequal %}
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% load static %}
+{% block body %}
+{% include 'recruiter_navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.g_border{
+		border:1px solid lightgray;
+		padding: 7px;
+		border-radius: 3px;
+	}
+</style>
+<!--===================================Main Body=============================-->
+<marquee direction="right">
+	<h4>Add Jobs</h4>
+</marquee>
+	<div class="container">
+			<form method="POST" class="mt-5" enctype="multipart/form-data">
+			{% csrf_token %}
+				<div class="form-group mt-2">
+					<label for="jtitle"><strong>Job Title</strong></label>
+					<input type="text" name="jtitle" placeholder="Enter job title..." class="form-control" required>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="sdate"><strong>Start Date (For Apply)</strong></label>
+						<input type="date" name="sdate" class="form-control">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="edate"><strong>End Date (For Apply)</strong></label>
+						<input type="date" name="edate" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="salary"><strong>Salary (Per Month)</strong></label>
+						<input type="text" name="salary" placeholder="Enter salary..." class="form-control">
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="clogo"><strong>Company Logo</strong></label>
+						<input type="file" name="clogo" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="experience"><strong>Experience (In Years)</strong></label>
+						<input type="text" name="experience" placeholder="Enter experience..." class="form-control" required>
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="skills"><strong>Skills</strong></label>
+						<input type="text" name="skills" placeholder="Required skills..." class="form-control" required>
+					</div>
+				</div>
+				<div class="form-group mt-2">
+					<label for="location"><strong>Company Location</strong></label>
+					<input type="text" name="location" placeholder="Enter location..." class="form-control" required>
+				</div>
+				<div class="form-group mt-2">
+					<label for="description"><strong>Description</strong></label>
+					<textarea name="description" placeholder="Enter description..." class="form-control" required></textarea>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Submit" class="btn btn-dark my-3">
+				</div>
+
+			</form>
+			
+	</div>
+{% include 'footer.html' %}
+	
+	{% ifequal error "no" %}
+		<script>
+			alert("Job Registered Successfully!!!");
+			window.location = ('{% url 'job_list' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+			alert("Something went wrong. Try again!!!");
+		</script>
+	{% endifequal %}
+
+{% endblock %}

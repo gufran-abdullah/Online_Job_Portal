@@ -1,0 +1,70 @@
+{% load static %}
+{% block body %}
+{% include 'admin_navigation.html' %}
+<style>
+	.card-body{
+		background: linear-gradient(60deg,#fff,maroon);
+		border-radius: 5px;
+		border-left: 5px  solid maroon;
+		box-shadow: 10px 10px 10px rgba(0,0,0,.5);
+	}
+	.msg_headings{
+		font-size:18px;font-weight:bold;color:maroon;
+	}
+	.msg_msgs{
+		font-size: 20px;
+		font-weight: normal;
+		color:black;
+	}
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.s_btn{
+		background: maroon;
+		color: #fff;
+	}
+	.s_btn:hover{
+		background: red;
+		color: yellow;
+		font-weight: bold;
+	}
+</style>
+<marquee direction="right">
+	<h4>All Messages</h4>
+</marquee>
+<div class="container">
+	<!--<form action="" method="POST" class="mt-3">
+		{% csrf_token %}
+		<div class="form-group d-flex">
+			<input type="search" name="srMsgs" class="form-control" placeholder="Search by name...">
+			<input type="submit" value="Search" class="btn s_btn mx-1">
+		</div>
+	</form>-->
+	<div class="row mt-3">
+		{% for msg in messages %}
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<span class="msg_headings">
+						Name:
+						<span class="msg_msgs">{{msg.name}}</span>
+						<a href="{% url 'delete_msgs' msg.id %}" style="float:right; color:#fff;"  onclick="return confirm('Are you sure to delete?')"><i class="fas fa-trash"></i></a> 
+					</span><br>
+					<span class="msg_headings">Email: 
+						<span class="msg_msgs">{{msg.email}}</span>
+					</span><br>
+					<span class="msg_headings">Message: <br>
+						<span class="msg_msgs">{{msg.message}}</span>
+					</span>	
+				</div>
+				
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	
+</div>
+{% include 'footer.html' %}
+{% endblock %}

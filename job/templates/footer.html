@@ -1,0 +1,49 @@
+{% load static %}
+
+<style>
+	footer{
+		width:100%;
+		height: auto;
+		background: black;
+		margin-top: 1%;
+		border-top: 4px solid maroon;
+	}
+	.footer_ci{
+		color: yellow;
+		font-size: 18px;
+
+	}	
+</style>
+
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mt-3">
+				<h3 class="text-white">Contact Information</h3>
+				<p class="footer_ci"><i class="fas fa-map-marker text-danger mx-1"></i>Superior University Ravi Campus Lahore</p>
+				<p class="footer_ci"><i class="fas fa-envelope text-danger mx-1"></i>superiorunversity.edu.pk</p>
+				<p class="footer_ci"><i class="fas fa-mobile text-danger mx-1"></i>P: +92 04237940451</p>
+				<p class="footer_ci"><i class="fas fa-globe text-danger mx-1"></i>W: www.superiorgroup.com</p>
+			</div>
+			<div class="col-md-4 mt-3">
+				<h3 class="text-white">Online Placement</h3>
+				<p class="footer_ci">
+					An employment website is a website that deals with employment or careers. Many employment websites are designed to allow employers to post job requirements for a positeion to be filled and are commonly known as job boards.
+				</p>
+			</div>
+			<div class="col-md-4 mt-3">
+				<h3 class="text-white">Newsletter</h3>
+				<p class="footer_ci">
+					If you want an extra information then send me your email id.
+				</p>
+				<form action="" method="POST" class="form-inline">
+					{% csrf_token %}
+					<div class="form-group">
+						<input type="email" placeholder="Enter your email" required class="form-control" name="emailid">
+						<input type="submit" value="Send" class="btn btn-danger form-control mb-3">  
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</footer>

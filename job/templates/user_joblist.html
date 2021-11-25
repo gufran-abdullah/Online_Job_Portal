@@ -1,0 +1,106 @@
+{% load static %}
+{% block body %}
+{% include 'user_navigation.html' %}
+<link rel="stylesheet" type="text/css" href="{% static "datatable/datatables.min.css" %}"/>
+<script type="text/javascript" src="{% static "datatable/datatables.min.js" %}"></script>
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.table_head{
+		background: maroon;
+		color: yellow;
+	}
+	.user_img{
+		width:50px;
+		height: 50px;
+		border-radius: 50%;
+	}
+	.del_icon{
+		background-color: maroon;
+		margin-left: 5px;
+		color:#fff;
+	}
+	.del_icon:hover{
+		background-color: red;
+		color: yellow;
+	}
+	.btn-group{
+		position: relative;
+		top: 32px;
+	}
+	.buttons-html5,.buttons-print{
+		background: maroon;
+		color: #fff;
+		border:none;
+	}
+	.buttons-html5:hover,.buttons-print:hover{
+		background: red;
+		color: yellow;
+	}
+	.dataTables_length{
+		position: relative;
+		top: 20px;
+	}
+	.apl_text{
+		font-weight: bold;
+		color:green;
+	}
+</style>
+<marquee direction="right">
+	<h4>List of All Jobs</h4>
+</marquee>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-hover" id="example">
+	<thead>
+		<tr class="table_head">
+			<th>Sr.#</th>
+			<th>Company Name</th>
+			<th>Job Title</th>
+			<th>Location</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for u in jobs %}
+		<tr>
+			<td>{{forloop.counter}}</td>
+			<td>{{u.recruiter.company}}</td>
+			<td>{{u.title}}</td>
+			<td>{{u.location}}</td>
+			<td>{{u.start_date}}</td>
+			<td>{{u.end_date}}</td>
+			<td>
+				{% if u.id in li %}
+					<p style="color:green;font-weight:bold;">Applied</p>
+				{% else %}
+					<a href="{% url 'job_applydetail' u.id %}" class="btn btn-sm del_icon">Apply</a>
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+		</div>
+	</div>
+
+</div>
+{% include 'footer.html' %}
+<script>
+	$(document).ready(function(){
+	$('#example').DataTable({
+		dom: 'lBfrtip',
+		buttons: [
+			'copy','csv','excel','pdf','print'
+		]
+	});
+	});
+</script>
+
+{% endblock %}

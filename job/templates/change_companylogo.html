@@ -1,0 +1,58 @@
+{% load static %}
+{% block body %}
+{% include 'recruiter_navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.g_border{
+		border:1px solid lightgray;
+		padding: 7px;
+		border-radius: 3px;
+	}
+</style>
+<!--===================================Main Body=============================-->
+<marquee direction="right">
+	<h4>Update Company Logo</h4>
+</marquee>
+	<div class="container">
+			<form method="POST" class="mt-5" enctype="multipart/form-data">
+			{% csrf_token %}
+				<div class="form-group mt-2">
+					<label for="jtitle"><strong>Job Title</strong></label>
+					<input type="text" name="jtitle" value="{{job.title}}" class="form-control" disabled>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12 mt-2">
+						<img src="{{job.image.url}}" alt="Company Logo" style="width:100px;height:100px;border-radius:50%;">
+					</div>
+				</div>
+				<div class="form-group mt-2">
+					<label for="location"><strong>Company Logo</strong></label>
+					<input type="file" name="clogo" class="form-control" accept="image/*" required>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Update" class="btn btn-dark my-3">
+				</div>
+
+			</form>
+			
+	</div>
+{% include 'footer.html' %}
+	
+	{% ifequal error "no" %}
+		<script>
+			alert("Logo Updated Successfully!!!");
+			window.location = ('{% url 'change_companylogo' job.id %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+			alert("Something went wrong. Try again!!!");
+		</script>
+	{% endifequal %}
+
+{% endblock %}

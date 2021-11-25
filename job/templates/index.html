@@ -1,0 +1,88 @@
+{% load static %}
+{% block body %}
+{% include 'navigation.html' %}
+<style>
+	.container{
+		max-width: 90%;
+	}
+	.std_imgs{
+		width:100%;
+		height:200px;
+		margin-top:5%;
+		border-radius: 50%;
+	}
+	.content{
+		text-align: center;
+		position: relative;
+		bottom: 30px;
+		left:20px;
+		background: rgba(0,0,0,0.5);
+		color: #fff;
+		height:30px;width:91%;
+	}
+</style>
+<!--Start Header-->
+<div>
+	<img src="{% static "images/portal4.png" %}" alt="Header image" style="width:100%; height:450px; margin-top:0.5%;">
+</div>
+<!--End Header-->
+<!--Start student Replaced-->
+<div class="container" style="background:black;height:auto;margin-top:1%;">
+	<h1 class="text-white text-center">----------| OUR PLACED PEOPLE |----------</h1>
+	<div class="row mt-3">
+		<div class="col-md-3">
+			<img src="{% static "images/s1.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>Facebook</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s2.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>Amazon</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s3.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>YouTube</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s4.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>Google</p>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-3">
+			<img src="{% static "images/s5.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>Infosys</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s6.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>LinkedIn</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s7.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>Twitter</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<img src="{% static "images/s8.jpg" %}" class="std_imgs">
+			<div class="content" style="">
+				<p>HCL</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!--End student Replaced-->
+
+{% include 'footer.html' %}
+{% endblock %}

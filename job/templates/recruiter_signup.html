@@ -1,0 +1,289 @@
+{% load static %}
+{% block body %}
+{% include 'navigation.html' %}
+<style>
+	marquee{
+		margin-top: 0.5%;
+		background: black;
+		color: #fff;
+	}
+	.g_border{
+		border:1px solid lightgray;
+		padding: 7px;
+		border-radius: 3px;
+	}
+</style>
+
+<script>
+	function checkpass() {
+		if(document.signup.pwd.value != document.signup.cpwd.value)
+		{
+			alert("Passwords doesn't match!!!");
+			document.signup.cpwd.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<!--===================================Main Body=============================-->
+<marquee direction="right">
+	<h4>Recruiter Registeration</h4>
+</marquee>
+	<div class="container">
+			<form onsubmit="return checkpass();" name="signup" method="POST" class="mt-5" enctype="multipart/form-data" id="signup_form">
+		    {% csrf_token %}
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="fname"><strong>First Name</strong></label>
+						<input type="text" name="fname" placeholder="Enter firstname..." class="form-control" id="form_fname" required>
+						<span class="error_form" id="fname_error_message"></span>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="lname"><strong>Last Name</strong></label>
+						<input type="text" name="lname" placeholder="Enter lastname..." class="form-control" id="form_lname" required>
+						<span class="error_form" id="lname_error_message"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="contact"><strong>Contact #</strong></label>
+						<input type="text" name="contact" placeholder="Enter contact #..." class="form-control" id="form_contact" required>
+						<span class="error_form" id="contact_error_message"></span>
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="company"><strong>Company</strong></label>
+						<input type="text" name="company" placeholder="Enter company name..." class="form-control" id="form_company" required>
+						<span class="error_form" id="company_error_message"></span>
+					</div>
+				</div>
+				<div class="form-group mt-2">
+					<label for="email"><strong>Email</strong></label>
+					<input type="email" name="email" placeholder="Enter email..." class="form-control" id="form_email" required>
+					<span class="error_form" id="email_error_message"></span>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="pwd"><strong>Password</strong></label>
+						<input type="password" name="pwd" placeholder="Enter password..." class="form-control" id="form_pwd" required>
+						<span class="error_form" id="pwd_error_message"></span>
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="cpwd"><strong>Confirm Password</strong></label>
+						<input type="password" name="cpwd" placeholder="Enter confirm password..." class="form-control" id="form_confirm_pwd" required>
+						<span class="error_form" id="confirm_pwd_error_message"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 mt-2">
+						<label for="gender"><strong>Gender</strong></label><br>
+						<div class="g_border">
+							<input type="radio" name="gender" value="male" >Male
+							<input type="radio" name="gender" value="female" >Female
+						</div>
+					</div>
+					<div class="form-group col-md-6 mt-2">
+						<label for="image"><strong>Image</strong></label>
+						<input type="file" name="image" class="form-control"accept="image/*" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Register" class="btn btn-dark my-3">
+					<a href="{% url 'user_login' %}" style="float:right;" class="mt-4">Already have an account? Register</a>
+				</div>
+
+	        </form>
+	        
+	</div>
+{% include 'footer.html' %}
+	
+	{% ifequal error "no" %}
+		<script>
+    		alert("Recruiter Registered Successfully!!!");
+			window.location = ('{% url 'recruiter_login' %}');
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "yes" %}
+		<script>
+  			alert("Something went wrong. Try again!!!");
+		</script>
+	{% endifequal %}
+
+	{% ifequal error "same_user" %}
+		<script>
+  			alert("Email already exists. Try another!!!");
+		</script>
+	{% endifequal %}
+
+
+<script type="text/javascript">
+	$(function(){	
+		$("#email_error_message").hide();
+		$("#pwd_error_message").hide();
+		$("#fname_error_message").hide();
+		$("#lname_error_message").hide();
+		$("#contact_error_message").hide();
+		$("#confirm_pwd_error_message").hide();
+		$("#company_error_message").hide();
+
+		var error_email = false;
+		var error_pwd = false;
+		var error_fname = false;
+		var error_lname = false;
+		var error_contact = false;
+		var error_confirm_pwd = false;
+		var error_company = false;
+
+		$("#form_email").focusout(function(){
+			check_email();
+		});
+		$("#form_pwd").focusout(function(){
+			check_pwd();
+		});
+		$("#form_fname").focusout(function(){
+			check_fname();
+		});
+		$("#form_lname").focusout(function(){
+			check_lname();
+		});
+		$("#form_contact").focusout(function(){
+			check_contact();
+		});
+		$("#form_confirm_pwd").focusout(function(){
+			check_confirm_pwd();
+		});
+		$("#form_company").focusout(function(){
+			check_company();
+		});
+
+		function check_email(){
+			var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			var email = $("#form_email").val();
+			if(pattern.test(email) && email !== ''){
+				$("#email_error_message").hide();
+				$("#form_email").css("border","1px solid green");
+			}
+			else{
+				$("#email_error_message").html("Invalid email");
+				$("#email_error_message").show();
+				$("#form_email").css("border","1px solid red");
+				error_email = true;
+			}
+		}
+
+		function check_pwd(){
+			var pwd_length = $("#form_pwd").val().length;
+			if(pwd_length < 4){
+				$("#pwd_error_message").html("Atleast 4 characters");
+				$("#pwd_error_message").show();
+				$("#form_pwd").css("border","1px solid red");
+				error_pwd = true;
+			}
+			else{
+				$("#pwd_error_message").hide();
+				$("#form_pwd").css("border","1px solid green");	
+			}
+		}
+
+		function check_fname(){
+			var pattern = /^[a-zA-Z]*$/;
+			var fname = $("#form_fname").val();
+			if(pattern.test(fname) && fname !== ''){
+				$("#fname_error_message").hide();
+				$("#form_fname").css("border","1px solid green");
+			}
+			else{
+				$("#fname_error_message").html("Letters Only");
+				$("#fname_error_message").show();
+				$("#form_fname").css("border","1px solid red");
+				error_fname = true;
+			}
+		}
+
+		function check_lname(){
+			var pattern = /^[a-zA-Z]*$/;
+			var lname = $("#form_lname").val();
+			if(pattern.test(lname) && lname !== ''){
+				$("#lname_error_message").hide();
+				$("#form_lname").css("border","1px solid green");
+			}
+			else{
+				$("#lname_error_message").html("Letters Only");
+				$("#lname_error_message").show();
+				$("#form_lname").css("border","1px solid red");
+				error_lname = true;
+			}
+		}
+
+		function check_contact(){
+			var pattern = /^[0-9]*$/;
+			var contact = $("#form_contact").val();
+			if(pattern.test(contact) && contact !== ''){
+				$("#contact_error_message").hide();
+				$("#form_contact").css("border","1px solid green");
+			}
+			else{
+				$("#contact_error_message").html("Digits Only");
+				$("#contact_error_message").show();
+				$("#form_contact").css("border","1px solid red");
+				error_contact = true;
+			}
+		}
+
+		function check_confirm_pwd(){
+			var pwd = $("#form_pwd").val();
+			var con_pwd = $("#form_confirm_pwd").val();
+			if(pwd !== con_pwd){
+				$("#confirm_pwd_error_message").html("Passwords doesn't match");
+				$("#confirm_pwd_error_message").show();
+				$("#form_confirm_pwd").css("border","1px solid red");
+				error_confirm_pwd = true;
+			}
+			else{
+				$("#confirm_pwd_error_message").hide();
+				$("#form_confirm_pwd").css("border","1px solid green");	
+			}
+		}
+
+		function check_company(){
+			var pattern = /^[a-zA-Z]*$/;
+			var company = $("#form_company").val();
+			if(pattern.test(company) && company !== ''){
+				$("#company_error_message").hide();
+				$("#form_company").css("border","1px solid green");
+			}
+			else{
+				$("#company_error_message").html("Letters Only");
+				$("#company_error_message").show();
+				$("#form_company").css("border","1px solid red");
+				error_company = true;
+			}
+		}
+
+		$("#signup_form").submit(function(){
+			error_pwd = false;
+			error_email = false;
+			error_fname = false;
+			error_lname = false;
+			error_contact = false;
+			error_confirm_pwd = false;
+			error_company = false;
+
+			check_email();
+			check_pwd();
+			check_fname();
+			check_lname();
+			check_contact();
+			check_confirm_pwd();
+			check_company();
+
+			if(error_email === false && error_pwd === false && error_fname === false && error_lname === false && error_contact === false && error_confirm_pwd === false && error_company  === false){
+				return true;
+			}
+			else{
+				return false;
+			}
+		});
+	});	
+</script>
+{% endblock %}
